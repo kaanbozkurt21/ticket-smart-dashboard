@@ -16,6 +16,7 @@ export default function Signup() {
     confirmPassword: '',
   });
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const validateForm = () => {
