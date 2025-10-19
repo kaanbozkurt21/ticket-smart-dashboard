@@ -56,10 +56,18 @@ export const AppShell = ({ children }) => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated');
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success('Çıkış yapıldı');
+      navigate('/login');
+    } catch (error) {
+      console.error('Logout error:', error);
+      navigate('/login');
+    }
   };
+
+  const currentUser = getCurrentUser();
 
   return (
     <div className="min-h-screen bg-background">
