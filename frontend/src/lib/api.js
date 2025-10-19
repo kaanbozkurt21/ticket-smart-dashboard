@@ -102,18 +102,152 @@ export async function callAI(path, payload, timeoutMs = 30000) {
 }
 
 /**
- * Fetch tickets with filters and pagination
- * GET /api/tickets?query=&status=&assignee=&tag=&page=&pageSize=
- * 
- * @param {Object} params
- * @param {string} [params.query]
- * @param {string} [params.status]
- * @param {string} [params.priority]
- * @param {string} [params.assignee]
- * @param {string} [params.tag]
- * @param {number} [params.page=1]
- * @param {number} [params.pageSize=25]
- * @returns {Promise<{items: Ticket[], total: number, page: number, pageSize: number}>}
+ * Authentication APIs
+ */
+
+/**
+ * Login user
+ * POST /api/auth/login
+ */
+export async function login(email, password) {
+  if (USE_MOCK) {
+    await delay(800);
+    
+    // MOCK: Accept any credentials
+    const mockToken = 'mock-jwt-token-' + Date.now();
+    const mockUser = {
+      id: 'user-1',
+      name: 'Ayşe Yılmaz',
+      email: email,
+      role: 'agent',
+    };
+    
+    localStorage.setItem('auth_token', mockToken);
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    localStorage.setItem('isAuthenticated', 'true');
+    
+    return { token: mockToken, user: mockUser };
+  }
+  
+  // REAL API:
+  const response = await fetch(`${API_URL}/api/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Login failed');
+  }
+  
+  const data = await response.json();
+  
+  // Store token and user info
+  localStorage.setItem('auth_token', data.token);
+  localStorage.setItem('user', JSON.stringify(data.user));
+  localStorage.setItem('isAuthenticated', 'true');
+  
+  return data;
+}
+
+/**
+ * Signup new user
+ * POST /api/auth/signup
+ */
+export async function signup(name, email, password) {
+  if (USE_MOCK) {
+    await delay(800);
+    
+    // MOCK: Accept registration
+    const mockToken = 'mock-jwt-token-' + Date.now();
+    const mockUser = {
+      id: 'user-' + Date.now(),
+      name: name,
+      email: email,
+      role: 'agent',
+    };
+    
+    localStorage.setItem('auth_token', mockToken);
+    localStorage.setItem('user', JSON.stringify(mockUser));
+    localStorage.setItem('isAuthenticated', 'true');
+    
+    return { token: mockToken, user: mockUser };
+  }
+  
+  // REAL API:
+  const response = await fetch(`${API_URL}/api/auth/signup`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ name, email, password }),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Signup failed');
+  }
+  
+  const data = await response.json();
+  
+  // Store token and user info
+  localStorage.setItem('auth_token', data.token);
+  localStorage.setItem('user', JSON.stringify(data.user));
+  localStorage.setItem('isAuthenticated', 'true');
+  
+  return data;
+}
+
+/**
+ * Logout user
+ * POST /api/auth/logout
+ */
+export async function logout() {
+  if (USE_MOCK) {
+    await delay(300);
+    
+    // MOCK: Clear local storage
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('isAuthenticated');
+    
+    return { success: true };
+  }
+  
+  // REAL API:
+  try {
+    await fetch(`${API_URL}/api/auth/logout`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`,
+      },
+    });
+  } catch (error) {
+    console.error('Logout API error:', error);
+  } finally {
+    // Always clear local storage
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('isAuthenticated');
+  }
+  
+  return { success: true };
+}
+
+/**
+ * Get current user
+ */
+export function getCurrentUser() {
+  try {
+    const userStr = localStorage.getItem('user');
+    return userStr ? JSON.parse(userStr) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Tickets APIs
  */
 export async function fetchTickets(params = {}) {
   await delay();
