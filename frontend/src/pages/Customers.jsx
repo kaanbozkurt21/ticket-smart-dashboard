@@ -6,7 +6,7 @@ import { DataTable } from '../components/custom/DataTable';
 import { Badge } from '../components/ui/badge';
 import { EmptyState } from '../components/custom/EmptyState';
 import { formatDate } from '../lib/utils';
-import customersData from '../lib/mock/customers.json';
+import { fetchCustomers } from '../lib/api';
 import { Users } from 'lucide-react';
 
 export default function Customers() {
