@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Bot, Sparkles, Send } from 'lucide-react';
+import { ArrowLeft, Bot, Sparkles, Send, Paperclip, Clock, User as UserIcon } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/tabs';
 import { StatusPill } from '../components/custom/StatusPill';
 import { PriorityBadge } from '../components/custom/PriorityBadge';
 import { TagBadge } from '../components/custom/TagBadge';
+import { AIModal } from '../components/custom/AIModal';
 import { formatDateTime } from '../lib/utils';
+import { generateAISummary, generateDraftReply, generateInternalNote } from '../lib/mock/ai';
 import ticketsData from '../lib/mock/tickets.json';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from 'sonner';
@@ -16,13 +19,26 @@ export default function TicketDetail() {
   const navigate = useNavigate();
   const [ticket, setTicket] = useState(null);
   const [replyText, setReplyText] = useState('');
-  const [showAISummary, setShowAISummary] = useState(false);
-  const [showDraftReply, setShowDraftReply] = useState(false);
+  const [showAISummaryModal, setShowAISummaryModal] = useState(false);
+  const [showDraftReplyModal, setShowDraftReplyModal] = useState(false);
+  const [internalNotes, setInternalNotes] = useState([
+    { id: 1, author: 'Ayşe Yılmaz', content: 'Müşteri ile telefon görüşmesi yapıldı.', timestamp: '2024-01-15T10:00:00Z' },
+    { id: 2, author: 'Can Özkan', content: 'Teknik ekibe yönlendirildi.', timestamp: '2024-01-15T11:30:00Z' },
+  ]);
+  const [activityTimeline, setActivityTimeline] = useState([]);
 
   useEffect(() => {
     const foundTicket = ticketsData.find(t => t.id === id);
     if (foundTicket) {
       setTicket(foundTicket);
+      
+      // Generate activity timeline
+      const timeline = [
+        { type: 'created', user: 'System', timestamp: foundTicket.createdAt, description: 'Ticket oluşturuldu' },
+        { type: 'assigned', user: 'Admin', timestamp: foundTicket.createdAt, description: `${foundTicket.assignee} kullanıcısına atandı` },
+        { type: 'status_change', user: foundTicket.assignee, timestamp: foundTicket.updatedAt, description: `Durum güncellendi: ${foundTicket.status}` },
+      ];
+      setActivityTimeline(timeline);
     } else {
       navigate('/tickets');
     }
