@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Search, Filter } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Search, Filter, X } from 'lucide-react';
 import { Input } from '../components/ui/input';
 import { Select, SelectOption } from '../components/ui/select';
+import { Button } from '../components/ui/button';
+import { Badge } from '../components/ui/badge';
 import { DataTable } from '../components/custom/DataTable';
 import { StatusPill } from '../components/custom/StatusPill';
 import { PriorityBadge } from '../components/custom/PriorityBadge';
@@ -12,38 +14,90 @@ import { formatRelativeTime } from '../lib/utils';
 import ticketsData from '../lib/mock/tickets.json';
 import { Ticket } from 'lucide-react';
 
+// Fuzzy search function
+const fuzzySearch = (str, pattern) => {
+  if (!pattern) return true;
+  pattern = pattern.toLowerCase();
+  str = str.toLowerCase();
+  
+  let patternIdx = 0;
+  let strIdx = 0;
+  
+  while (patternIdx < pattern.length && strIdx < str.length) {
+    if (pattern[patternIdx] === str[strIdx]) {
+      patternIdx++;
+    }
+    strIdx++;
+  }
+  
+  return patternIdx === pattern.length;
+};
+
 export default function Tickets() {
+  const [searchParams] = useSearchParams();
   const [tickets, setTickets] = useState(ticketsData);
   const [filteredTickets, setFilteredTickets] = useState(ticketsData);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [statusFilter, setStatusFilter] = useState('all');
   const [priorityFilter, setPriorityFilter] = useState('all');
+  const [assigneeFilter, setAssigneeFilter] = useState('all');
+  const [tagFilter, setTagFilter] = useState('all');
+  const [activeFiltersCount, setActiveFiltersCount] = useState(0);
   const navigate = useNavigate();
+
+  // Get unique assignees and tags for filters
+  const uniqueAssignees = [...new Set(tickets.map(t => t.assignee))];
+  const uniqueTags = [...new Set(tickets.flatMap(t => t.tags))];
 
   useEffect(() => {
     let filtered = [...tickets];
+    let filtersCount = 0;
 
-    // Search filter
+    // Fuzzy search filter on subject
     if (searchTerm) {
       filtered = filtered.filter(ticket =>
-        ticket.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        fuzzySearch(ticket.subject, searchTerm) ||
         ticket.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
         ticket.id.toLowerCase().includes(searchTerm.toLowerCase())
       );
+      filtersCount++;
     }
 
     // Status filter
     if (statusFilter !== 'all') {
       filtered = filtered.filter(ticket => ticket.status === statusFilter);
+      filtersCount++;
     }
 
     // Priority filter
     if (priorityFilter !== 'all') {
       filtered = filtered.filter(ticket => ticket.priority === priorityFilter);
+      filtersCount++;
+    }
+
+    // Assignee filter
+    if (assigneeFilter !== 'all') {
+      filtered = filtered.filter(ticket => ticket.assignee === assigneeFilter);
+      filtersCount++;
+    }
+
+    // Tag filter
+    if (tagFilter !== 'all') {
+      filtered = filtered.filter(ticket => ticket.tags.includes(tagFilter));
+      filtersCount++;
     }
 
     setFilteredTickets(filtered);
-  }, [searchTerm, statusFilter, priorityFilter, tickets]);
+    setActiveFiltersCount(filtersCount);
+  }, [searchTerm, statusFilter, priorityFilter, assigneeFilter, tagFilter, tickets]);
+
+  const clearAllFilters = () => {
+    setSearchTerm('');
+    setStatusFilter('all');
+    setPriorityFilter('all');
+    setAssigneeFilter('all');
+    setTagFilter('all');
+  };
 
   const columns = [
     {
