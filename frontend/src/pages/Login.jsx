@@ -110,8 +110,8 @@ export default function Login() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full">
-                Giriş Yap
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Giriş yapılıyor...' : 'Giriş Yap'}
               </Button>
             </form>
 
