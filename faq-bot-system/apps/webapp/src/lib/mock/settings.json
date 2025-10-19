@@ -1,0 +1,78 @@
+{
+  "minScore": 2,
+  "language": "tr",
+  "normalize": true,
+  "stopwords": [
+    "bir",
+    "ve",
+    "veya",
+    "için",
+    "ile",
+    "mi",
+    "mu",
+    "mı",
+    "mü",
+    "da",
+    "de",
+    "ki",
+    "ne",
+    "bu",
+    "şu",
+    "o"
+  ],
+  "synonymGroups": {
+    "randevu": [
+      "appointment",
+      "rezervasyon",
+      "görüşme",
+      "sıra",
+      "tarih"
+    ],
+    "ücret": [
+      "fiyat",
+      "maliyet",
+      "ödeme",
+      "para",
+      "tutar"
+    ],
+    "iptal": [
+      "cancel",
+      "erteleme",
+      "değiştirme",
+      "vazgeçme"
+    ],
+    "adres": [
+      "konum",
+      "ulaşım",
+      "nerede",
+      "harita",
+      "yol"
+    ],
+    "çalışma": [
+      "mesai",
+      "saat",
+      "açık",
+      "kapalı",
+      "zaman"
+    ],
+    "acil": [
+      "emergency",
+      "urgent",
+      "ivedi",
+      "hızlı"
+    ],
+    "online": [
+      "video",
+      "uzaktan",
+      "sanal",
+      "dijital",
+      "telesağlık"
+    ],
+    "sigorta": [
+      "sgk",
+      "anlaşma",
+      "özel",
+      "poliçe"
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "faq-1",
+    "question": "Randevu nasıl alınır?",
+    "answer": "Randevu almak için \u00fcç farklı yöntem kullanabilirsiniz:\n\n1. **Online Randevu**: Web sitemizden 'Randevu Al' bölümüne giderek tarihinizi ve saatinizi seçebilirsiniz.\n\n2. **Telefon ile**: 0212 XXX XX XX numaralı telefonu arayarak randevu alabilirsiniz. Hattımız hafta içi 09:00-18:00 arası açıktır.\n\n3. **WhatsApp**: 0555 XXX XX XX numarasına WhatsApp'tan mesaj göndererek de randevu oluşturabilirsiniz.",
+    "keywords": ["randevu", "appointment", "rezervasyon", "tarih"],
+    "category": "genel",
+    "clickCount": 245,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-2",
+    "question": "Çalışma saatleri nedir?",
+    "answer": "Kliniğimiz aşağıdaki saatlerde hizmet vermektedir:\n\n**Hafta İçi**: 09:00 - 19:00\n**Cumartesi**: 09:00 - 14:00\n**Pazar**: Kapalı\n\nResmi tatil günlerinde kapalıyız. Acil durumlar için lütfen 0555 XXX XX XX numaralı acil hattımızı arayın.",
+    "keywords": ["çalışma", "saat", "açık", "kapalı", "mesai"],
+    "category": "genel",
+    "clickCount": 189,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-3",
+    "question": "Adres ve ulaşım bilgileri",
+    "answer": "**Adresimiz:**\nExample Mahallesi, Sağlık Sokak No:123\nİstanbul, Türkiye\n\n**Ulaşım:**\n- Metro: En yakın metro istasyonu Example istasyonu (500m)\n- Otobüs: 123, 456, 789 hatları kliniğimizin önünden geçer\n- Otopark: Binamızın altında ücretsiz otopark mevcuttur\n\nDetaylı harita için web sitemizin 'Konum' bölümüne bakabilirsiniz.",
+    "keywords": ["adres", "ulaşım", "nerede", "konum", "harita"],
+    "category": "genel",
+    "clickCount": 167,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-4",
+    "question": "Muayene ücretleri nedir?",
+    "answer": "Muayene ücretlerimiz aşağıdaki gibidir:\n\n**Genel Muayene**: 500 TL\n**Kontrol Muayenesi**: 300 TL\n**Online Konsultasyon**: 400 TL\n\n**Sigorta:**\nSGK ve özel sigorta anlaşmalarımız bulunmaktadır. Lütfen sigortanızın geçerli olup olmadığını randevu alırken belirtin.\n\n**Ödeme Yöntemleri:**\nNakit, kredi kartı, banka kartı ile ödeme yapabilirsiniz.",
+    "keywords": ["ücret", "fiyat", "maliyet", "ödeme", "para"],
+    "category": "finansal",
+    "clickCount": 234,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-5",
+    "question": "Hangi sigorta anlaşmalarınız var?",
+    "answer": "Aşağıdaki sigorta kurumları ile anlaşmalıyız:\n\n**Kamu:**\n- SGK (Sosyal Güvenlik Kurumu)\n\n**Özel Sigortalar:**\n- Allianz\n- Axa\n- Acibadem Sigorta\n- Groupama\n- HDI Sigorta\n\nSigortanız listede yoksa, lütfen bize ulaşın. Sürekli yeni anlaşmalar yapmaktayız.",
+    "keywords": ["sigorta", "sgk", "anlaşma", "özel"],
+    "category": "finansal",
+    "clickCount": 145,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-6",
+    "question": "Randevumu iptal edebilir miyim?",
+    "answer": "Evet, randevunuzu iptal edebilir veya erteleyebilirsiniz.\n\n**İptal Koşulları:**\n- Randevu saatinden en az 24 saat önce iptal etmeniz gerekir\n- Son 24 saat içinde yapılan iptaller için iptal ücreti uygulanır\n\n**İptal Yöntemleri:**\n1. Web sitemizden 'Randevularım' bölümünden\n2. Telefon ile: 0212 XXX XX XX\n3. WhatsApp: 0555 XXX XX XX\n\nLütfen randevunuzu iptal ederken randevu numarasını hazır bulundurun.",
+    "keywords": ["iptal", "cancel", "erteleme", "değiştirme"],
+    "category": "randevu",
+    "clickCount": 98,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-7",
+    "question": "Online görüşme yapılabiliyor mu?",
+    "answer": "Evet! Online görüşme hizmeti sunuyoruz.\n\n**Online Konsultasyon:**\n- Video görüşme ile uzaktan muayene\n- Ücreti: 400 TL\n- Süresi: 30 dakika\n\n**Nasıl Çalışır:**\n1. Web sitemizden 'Online Randevu' seçeneğini seçin\n2. Uygun tarihi ve saati belirleyin\n3. Ödemenizi yapın\n4. Randevu saatinde size e-posta ile gönderilen linke tıklayın\n\n**Gereksinimler:**\n- İnternet bağlantısı\n- Kamera ve mikrofon\n- Masastü veya mobil cihaz",
+    "keywords": ["online", "video", "uzaktan", "telesas"],
+    "category": "hizmet",
+    "clickCount": 123,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "id": "faq-8",
+    "question": "Acil durumda ne yapmalıyım?",
+    "answer": "**Acil Durum Hattı:**\n0555 XXX XX XX (7/24 açık)\n\nÇalışma saatleri dışında veya hafta sonları acil durumlar için lütfen bu hattı arayın.\n\n**Hayati Tehlike:**\nEğer durum hayati tehlike arz ediyorsa, lütfen 112 Acil Servis'i arayın.\n\n**Acil Servisler:**\nEn yakın acil servisler:\n- Example Hastanesi: 2 km\n- Sağlık Hastanesi: 3 km\n\nKliniğimiz acil servis hizmeti sunmamaktadır.",
+    "keywords": ["acil", "emergency", "urgent", "112"],
+    "category": "acil",
+    "clickCount": 87,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  }
+]
