@@ -557,3 +557,79 @@ export async function fetchRecentTickets(limit = 5) {
   
   return recent;
 }
+
+
+/**
+ * Billing APIs
+ */
+
+/**
+ * Create checkout session for plan upgrade
+ * POST /api/billing/checkout
+ * 
+ * @param {string} planId - Plan ID ('free', 'pro', 'enterprise')
+ * @returns {Promise<{checkoutUrl: string}>}
+ */
+export async function createCheckoutSession(planId) {
+  if (USE_MOCK) {
+    await delay(1000);
+    
+    // MOCK: Return fake checkout URL
+    return {
+      checkoutUrl: `https://checkout.stripe.com/mock/${planId}`,
+      sessionId: 'mock-session-' + Date.now(),
+    };
+  }
+  
+  // REAL API:
+  const response = await fetch(`${API_URL}/api/billing/checkout`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`,
+    },
+    body: JSON.stringify({ planId }),
+  });
+  
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || 'Checkout failed');
+  }
+  
+  return await response.json();
+}
+
+/**
+ * Get current subscription status
+ * GET /api/billing/subscription
+ */
+export async function getSubscription() {
+  if (USE_MOCK) {
+    await delay();
+    
+    // MOCK: Return fake subscription
+    return {
+      plan: 'pro',
+      status: 'active',
+      currentPeriodEnd: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(),
+      cancelAtPeriodEnd: false,
+    };
+  }
+  
+  // REAL API:
+  return await apiCall('/api/billing/subscription');
+}
+
+/**
+ * Cancel subscription
+ * POST /api/billing/cancel
+ */
+export async function cancelSubscription() {
+  if (USE_MOCK) {
+    await delay(800);
+    return { success: true };
+  }
+  
+  // REAL API:
+  return await apiCall('/api/billing/cancel', { method: 'POST' });
+}
