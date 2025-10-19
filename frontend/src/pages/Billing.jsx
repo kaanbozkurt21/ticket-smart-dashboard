@@ -128,8 +128,13 @@ export default function Billing() {
                 className="w-full mt-6"
                 variant={plan.highlighted ? 'default' : 'outline'}
                 onClick={() => handleSelectPlan(plan.name)}
+                disabled={loading === plan.name.toLowerCase()}
               >
-                {plan.name === 'Enterprise' ? 'İletişime Geç' : 'Planı Seç'}
+                {loading === plan.name.toLowerCase() 
+                  ? 'İşleniyor...' 
+                  : plan.name === 'Enterprise' 
+                    ? 'İletişime Geç' 
+                    : 'Planı Seç'}
               </Button>
             </CardContent>
           </Card>
