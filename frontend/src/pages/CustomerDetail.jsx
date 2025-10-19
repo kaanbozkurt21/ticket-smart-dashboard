@@ -12,21 +12,35 @@ export default function CustomerDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const [customer, setCustomer] = useState(null);
-  const [customerTickets, setCustomerTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const foundCustomer = customersData.find(c => c.id === id);
-    if (foundCustomer) {
-      setCustomer(foundCustomer);
-      const tickets = ticketsData.filter(t => t.customerId === id);
-      setCustomerTickets(tickets);
-    } else {
-      navigate('/customers');
-    }
+    // Load customer from API
+    const loadCustomer = async () => {
+      try {
+        setLoading(true);
+        const customerData = await fetchCustomer(id);
+        setCustomer(customerData);
+      } catch (error) {
+        console.error('Failed to load customer:', error);
+        navigate('/customers');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadCustomer();
   }, [id, navigate]);
 
-  if (!customer) {
-    return <div>Yüklenyor...</div>;
+  if (loading || !customer) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Yüklenyor...</p>
+        </div>
+      </div>
+    );
   }
 
   const getPlanBadgeVariant = (plan) => {
