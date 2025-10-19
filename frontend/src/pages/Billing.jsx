@@ -52,8 +52,33 @@ const plans = [
 ];
 
 export default function Billing() {
-  const handleSelectPlan = (planName) => {
-    toast.success(`${planName} planı seçildi (Mock)`);
+  const [loading, setLoading] = useState(null);
+  
+  const handleSelectPlan = async (planName) => {
+    const planId = planName.toLowerCase();
+    
+    // For now, disabled for real checkout
+    if (planName === 'Enterprise') {
+      toast.info('Kurumsal plan için lütfen satış ekibimizle iletişime geçin');
+      return;
+    }
+    
+    setLoading(planId);
+    
+    try {
+      const { checkoutUrl } = await createCheckoutSession(planId);
+      
+      // Mock: Show checkout URL instead of redirecting
+      toast.success(`${planName} planı seçildi (Mock checkout URL hazır)`);
+      console.log('Checkout URL:', checkoutUrl);
+      
+      // REAL: Redirect to Stripe checkout
+      // window.location.href = checkoutUrl;
+    } catch (error) {
+      toast.error(error.message || 'Checkout başlatılamadı');
+    } finally {
+      setLoading(null);
+    }
   };
 
   return (
