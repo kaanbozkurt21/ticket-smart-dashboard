@@ -213,36 +213,6 @@ export default function TicketDetail() {
               </Button>
             </CardContent>
           </Card>
-                <Bot className="h-5 w-5" />
-                AI Yardımcısı
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <Button 
-                variant="outline" 
-                className="w-full justify-start"
-                onClick={handleAISummary}
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                AI Özeti
-              </Button>
-              <Button 
-                variant="outline" 
-                className="w-full justify-start"
-                onClick={handleDraftReply}
-              >
-                <Sparkles className="mr-2 h-4 w-4" />
-                Taslak Yanıt
-              </Button>
-              
-              {showAISummary && (
-                <div className="mt-4 p-3 bg-muted rounded-lg text-sm">
-                  <p className="font-medium mb-2">AI Özeti:</p>
-                  <p className="text-muted-foreground">{mockAISummary}</p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
 
           {/* Ticket Details */}
           <Card>
