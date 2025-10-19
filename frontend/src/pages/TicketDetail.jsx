@@ -197,6 +197,31 @@ export default function TicketDetail() {
                 variant="outline" 
                 className="w-full justify-start"
                 onClick={handleAISummary}
+                aria-label="AI özeti oluştur"
+              >
+                <Sparkles className="mr-2 h-4 w-4" />
+                AI Özeti
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full justify-start"
+                onClick={handleDraftReply}
+                aria-label="AI taslak yanıt oluştur"
+              >
+                <Sparkles className="mr-2 h-4 w-4" />
+                Taslak Yanıt
+              </Button>
+            </CardContent>
+          </Card>
+                <Bot className="h-5 w-5" />
+                AI Yardımcısı
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <Button 
+                variant="outline" 
+                className="w-full justify-start"
+                onClick={handleAISummary}
               >
                 <Sparkles className="mr-2 h-4 w-4" />
                 AI Özeti
