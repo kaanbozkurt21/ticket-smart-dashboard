@@ -4,58 +4,102 @@
  * Mock implementations that match the expected API contract.
  * To switch to real API: Replace mock logic with actual fetch calls.
  * 
- * @typedef {Object} Ticket
- * @property {string} id
- * @property {string} subject
- * @property {string} description
- * @property {'open'|'in-progress'|'resolved'|'closed'} status
- * @property {'low'|'medium'|'high'} priority
- * @property {string} assignee
- * @property {string} customer
- * @property {string} customerId
- * @property {string[]} tags
- * @property {string} createdAt
- * @property {string} updatedAt
- * @property {string} [resolvedAt]
- * @property {Message[]} [messages]
- * 
- * @typedef {Object} Message
- * @property {string} id
- * @property {string} author
- * @property {'customer'|'agent'} role
- * @property {string} content
- * @property {string} timestamp
- * 
- * @typedef {Object} TimelineEvent
- * @property {string} type
- * @property {string} user
- * @property {string} timestamp
- * @property {string} description
- * 
- * @typedef {Object} Note
- * @property {string} id
- * @property {string} body
- * @property {string} author
- * @property {string} createdAt
- * 
- * @typedef {Object} Customer
- * @property {string} id
- * @property {string} name
- * @property {string} email
- * @property {string} company
- * @property {string} plan
- * @property {string} status
- * @property {number} totalTickets
- * @property {number} openTickets
- * @property {string} joinedAt
- * @property {string} lastActivity
+ * Environment Variables:
+ * - REACT_APP_API_URL: Backend API base URL
+ * - REACT_APP_APP_NAME: Application name
  */
 
 import ticketsData from './mock/tickets.json';
 import customersData from './mock/customers.json';
 
+// Get API URL from environment or use mock
+const API_URL = process.env.REACT_APP_API_URL || '';
+const USE_MOCK = !API_URL; // If no API_URL, use mock data
+
 // Simulate network delay for realistic UX
 const delay = (ms = 300) => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * Generic API call wrapper with error handling
+ */
+async function apiCall(endpoint, options = {}) {
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`,
+        ...options.headers,
+      },
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(error.message || 'API request failed');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('API Error:', error);
+    throw error;
+  }
+}
+
+/**
+ * Generic AI API call with timeout and error handling
+ * @param {string} path - AI endpoint path (e.g., '/summary', '/draft-reply')
+ * @param {Object} payload - Request payload
+ * @returns {Promise<any>}
+ */
+export async function callAI(path, payload, timeoutMs = 30000) {
+  // Create abort controller for timeout
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  
+  try {
+    if (USE_MOCK) {
+      // MOCK: Simulate AI processing
+      await delay(1500);
+      
+      if (path === '/summary') {
+        return {
+          summary: `Bu ticket, ${payload.ticket.customer} tarafından ${payload.ticket.priority} öncelikli olarak açılmıştır. ${payload.ticket.tags.join(', ')} kategorilerinde işaretlenmiştir.`
+        };
+      } else if (path === '/draft-reply') {
+        return {
+          draft: `Merhaba ${payload.ticket.customer},\\n\\nSorununuzu inceledik ve çözüm önerilerimiz aşağıdadır.\\n\\nİyi günler,\\n${payload.ticket.assignee}`
+        };
+      }
+    }
+    
+    // REAL API:
+    const response = await fetch(`${API_URL}/api/ai${path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('auth_token') || ''}`,
+      },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    
+    clearTimeout(timeoutId);
+    
+    if (!response.ok) {
+      throw new Error('AI request failed');
+    }
+    
+    return await response.json();
+  } catch (error) {
+    clearTimeout(timeoutId);
+    
+    if (error.name === 'AbortError') {
+      throw new Error('AI request timeout - lütfen tekrar deneyin');
+    }
+    
+    throw error;
+  }
+}
 
 /**
  * Fetch tickets with filters and pagination
