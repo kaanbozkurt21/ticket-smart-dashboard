@@ -46,14 +46,21 @@ export default function Signup() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // Mock signup
-      localStorage.setItem('isAuthenticated', 'true');
-      toast.success('Kayıt başarılı! Hoş geldiniz!');
-      navigate('/');
+      setLoading(true);
+      
+      try {
+        await signup(formData.name, formData.email, formData.password);
+        toast.success('Kayıt başarılı! Hoş geldiniz!');
+        navigate('/');
+      } catch (error) {
+        toast.error(error.message || 'Kayıt başarısız');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
