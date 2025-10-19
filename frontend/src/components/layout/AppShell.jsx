@@ -28,7 +28,10 @@ const navigation = [
 export const AppShell = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [theme, setTheme] = useState('light');
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme') || 'light';
@@ -41,6 +44,19 @@ export const AppShell = ({ children }) => {
     setTheme(newTheme);
     localStorage.setItem('theme', newTheme);
     document.documentElement.classList.toggle('dark', newTheme === 'dark');
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/tickets?search=${encodeURIComponent(searchQuery)}`);
+      setSearchQuery('');
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('isAuthenticated');
+    navigate('/login');
   };
 
   return (
