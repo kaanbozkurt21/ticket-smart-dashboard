@@ -45,15 +45,16 @@ export default function TicketDetail() {
   }, [id, navigate]);
 
   const handleAISummary = () => {
-    setShowAISummary(true);
-    toast.success('AI özeti oluşturuldu');
+    setShowAISummaryModal(true);
   };
 
   const handleDraftReply = () => {
-    const draftText = `Merhaba ${ticket.customer},\n\nSorununuzu inceledik. Detaylı bir çözüm önerisi aşağıda belirtilmiştir:\n\n- Adım 1: ...\n- Adım 2: ...\n\nDaha fazla yardıma ihtiyacınız olursa lütfen bize ulaşın.\n\nİyi günler,\nDestek Ekibi`;
-    setReplyText(draftText);
-    setShowDraftReply(true);
-    toast.success('AI taslak yanıt hazırlandı');
+    setShowDraftReplyModal(true);
+  };
+
+  const applyDraftReply = (content) => {
+    setReplyText(content);
+    toast.success('Taslak yanıt uygulandı');
   };
 
   const handleSendReply = () => {
@@ -63,14 +64,16 @@ export default function TicketDetail() {
     }
     toast.success('Yanıt gönderildi');
     setReplyText('');
-    setShowDraftReply(false);
   };
 
   if (!ticket) {
     return <div>Yüklenyor...</div>;
   }
 
-  const mockAISummary = `Bu ticket, ${ticket.customer} tarafından ${ticket.priority} öncelikli olarak açılmıştır. Konu "${ticket.subject}" başlığı altında raporlanmıştır. ${ticket.tags.join(', ')} kategorilerinde etiketlenmiştir. Şu anda ${ticket.assignee} tarafından işlenmektedir.`;
+  const mockAttachments = [
+    { id: 1, name: 'screenshot.png', size: '245 KB', type: 'image' },
+    { id: 2, name: 'error_log.txt', size: '12 KB', type: 'text' },
+  ];
 
   return (
     <div className="space-y-6 animate-fade-in">
