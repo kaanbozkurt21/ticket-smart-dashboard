@@ -148,8 +148,8 @@ export const AppShell = ({ children }) => {
                   />
                   <div className="absolute right-0 mt-2 w-56 rounded-lg border bg-card shadow-lg z-50 animate-fade-in">
                     <div className="p-3 border-b">
-                      <p className="text-sm font-medium">Ayşe Yılmaz</p>
-                      <p className="text-xs text-muted-foreground">ayse@example.com</p>
+                      <p className="text-sm font-medium">{currentUser?.name || 'User'}</p>
+                      <p className="text-xs text-muted-foreground">{currentUser?.email || 'user@example.com'}</p>
                     </div>
                     <div className="p-2">
                       <Link
