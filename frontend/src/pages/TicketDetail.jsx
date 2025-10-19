@@ -20,27 +20,25 @@ export default function TicketDetail() {
   const [replyText, setReplyText] = useState('');
   const [showAISummaryModal, setShowAISummaryModal] = useState(false);
   const [showDraftReplyModal, setShowDraftReplyModal] = useState(false);
-  const [internalNotes, setInternalNotes] = useState([
-    { id: 1, author: 'Ayşe Yılmaz', content: 'Müşteri ile telefon görüşmesi yapıldı.', timestamp: '2024-01-15T10:00:00Z' },
-    { id: 2, author: 'Can Özkan', content: 'Teknik ekibe yönlendirildi.', timestamp: '2024-01-15T11:30:00Z' },
-  ]);
-  const [activityTimeline, setActivityTimeline] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const foundTicket = ticketsData.find(t => t.id === id);
-    if (foundTicket) {
-      setTicket(foundTicket);
-      
-      // Generate activity timeline
-      const timeline = [
-        { type: 'created', user: 'System', timestamp: foundTicket.createdAt, description: 'Ticket oluşturuldu' },
-        { type: 'assigned', user: 'Admin', timestamp: foundTicket.createdAt, description: `${foundTicket.assignee} kullanıcısına atandı` },
-        { type: 'status_change', user: foundTicket.assignee, timestamp: foundTicket.updatedAt, description: `Durum güncellendi: ${foundTicket.status}` },
-      ];
-      setActivityTimeline(timeline);
-    } else {
-      navigate('/tickets');
-    }
+    // Load ticket from API
+    const loadTicket = async () => {
+      try {
+        setLoading(true);
+        const ticketData = await fetchTicket(id);
+        setTicket(ticketData);
+      } catch (error) {
+        console.error('Failed to load ticket:', error);
+        toast.error('Ticket yüklenemedi');
+        navigate('/tickets');
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadTicket();
   }, [id, navigate]);
 
   const handleAISummary = () => {
