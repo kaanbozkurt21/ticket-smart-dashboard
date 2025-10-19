@@ -69,6 +69,7 @@ export const AppShell = ({ children }) => {
             size="icon"
             className="lg:hidden"
             onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label="Menüyü aç"
           >
             {sidebarOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </Button>
@@ -80,12 +81,37 @@ export const AppShell = ({ children }) => {
             <span className="font-semibold text-lg hidden sm:inline">SupportAI</span>
           </div>
 
+          {/* Search Bar */}
+          <form onSubmit={handleSearch} className="hidden md:flex flex-1 max-w-md mx-4">
+            <div className="relative w-full">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Ticket ara..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+                aria-label="Ticket arama"
+              />
+            </div>
+          </form>
+
           <div className="ml-auto flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full"
+              aria-label="Bildirimler"
+            >
+              <Bell className="h-5 w-5" />
+            </Button>
+            
             <Button
               variant="ghost"
               size="icon"
               onClick={toggleTheme}
               className="rounded-full"
+              aria-label={theme === 'light' ? 'Karanlık moda geç' : 'Aydınlık moda geç'}
             >
               {theme === 'light' ? (
                 <Moon className="h-5 w-5" />
@@ -93,8 +119,58 @@ export const AppShell = ({ children }) => {
                 <Sun className="h-5 w-5" />
               )}
             </Button>
-            <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium">
-              AY
+            
+            {/* Profile Menu */}
+            <div className="relative">
+              <button
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="h-8 w-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                aria-label="Profil menüsü"
+              >
+                AY
+              </button>
+              
+              {showProfileMenu && (
+                <>
+                  <div 
+                    className="fixed inset-0 z-40" 
+                    onClick={() => setShowProfileMenu(false)}
+                  />
+                  <div className="absolute right-0 mt-2 w-56 rounded-lg border bg-card shadow-lg z-50 animate-fade-in">
+                    <div className="p-3 border-b">
+                      <p className="text-sm font-medium">Ayşe Yılmaz</p>
+                      <p className="text-xs text-muted-foreground">ayse@example.com</p>
+                    </div>
+                    <div className="p-2">
+                      <Link
+                        to="/settings/billing"
+                        className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                        onClick={() => setShowProfileMenu(false)}
+                      >
+                        <User className="h-4 w-4" />
+                        Profil
+                      </Link>
+                      <Link
+                        to="/settings/billing"
+                        className="flex items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors"
+                        onClick={() => setShowProfileMenu(false)}
+                      >
+                        <Settings className="h-4 w-4" />
+                        Ayarlar
+                      </Link>
+                    </div>
+                    <div className="p-2 border-t">
+                      <button
+                        onClick={handleLogout}
+                        className="flex w-full items-center gap-2 px-3 py-2 text-sm rounded-md hover:bg-muted transition-colors text-destructive"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Çıkış Yap
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -119,11 +195,12 @@ export const AppShell = ({ children }) => {
                   to={item.href}
                   onClick={() => setSidebarOpen(false)}
                   className={cn(
-                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                    'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
                     isActive
                       ? 'bg-primary text-primary-foreground'
                       : 'text-sidebar-foreground hover:bg-secondary'
                   )}
+                  aria-label={item.name}
                 >
                   <item.icon className="h-5 w-5" />
                   {item.name}
