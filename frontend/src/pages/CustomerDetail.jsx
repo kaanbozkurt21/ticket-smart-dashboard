@@ -136,9 +136,9 @@ export default function CustomerDetail() {
               <CardTitle>Ticket Geçmişi</CardTitle>
             </CardHeader>
             <CardContent>
-              {customerTickets.length > 0 ? (
+              {customer.tickets && customer.tickets.length > 0 ? (
                 <div className="space-y-3">
-                  {customerTickets.map((ticket) => (
+                  {customer.tickets.map((ticket) => (
                     <Link
                       key={ticket.id}
                       to={`/tickets/${ticket.id}`}
