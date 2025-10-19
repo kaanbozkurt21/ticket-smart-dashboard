@@ -6,6 +6,7 @@ import { Label } from '../components/ui/label';
 import { Button } from '../components/ui/button';
 import { Ticket } from 'lucide-react';
 import { toast } from 'sonner';
+import { login } from '../lib/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
