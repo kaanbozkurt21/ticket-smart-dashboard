@@ -34,14 +34,21 @@ export default function Login() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // Mock login
-      localStorage.setItem('isAuthenticated', 'true');
-      toast.success('Giriş başarılı!');
-      navigate('/');
+      setLoading(true);
+      
+      try {
+        await login(email, password);
+        toast.success('Giriş başarılı!');
+        navigate('/');
+      } catch (error) {
+        toast.error(error.message || 'Giriş başarısız');
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
