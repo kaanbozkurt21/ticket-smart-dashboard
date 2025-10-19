@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import ticketsData from '../lib/mock/tickets.json';
+import { fetchDashboardStats, fetchRecentTickets } from '../lib/api';
 
 const chartData = [
   { name: 'Pzt', tickets: 12 },
