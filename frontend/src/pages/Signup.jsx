@@ -153,8 +153,8 @@ export default function Signup() {
                 )}
               </div>
 
-              <Button type="submit" className="w-full">
-                Kayıt Ol
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Kayıt yapılıyor...' : 'Kayıt Ol'}
               </Button>
             </form>
 
