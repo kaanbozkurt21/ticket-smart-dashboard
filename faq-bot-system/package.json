@@ -1,0 +1,19 @@
+{
+  "name": "faq-bot-system",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --filter webapp dev & pnpm --filter widget dev",
+    "build": "pnpm --filter webapp build && pnpm --filter widget build",
+    "lint": "pnpm --filter webapp lint && pnpm --filter widget lint",
+    "test": "pnpm --filter webapp test",
+    "clean": "pnpm -r exec rm -rf node_modules dist .next"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0"
+  }
+}
