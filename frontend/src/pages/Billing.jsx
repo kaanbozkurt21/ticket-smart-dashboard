@@ -2,6 +2,8 @@ import { Check } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { toast } from 'sonner';
+import { createCheckoutSession } from '../lib/api';
+import { useState } from 'react';
 
 const plans = [
   {
