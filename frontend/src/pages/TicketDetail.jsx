@@ -63,14 +63,16 @@ export default function TicketDetail() {
     setReplyText('');
   };
 
-  if (!ticket) {
-    return <div>Yüklenyor...</div>;
+  if (loading || !ticket) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin h-8 w-8 border-4 border-primary border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Yükleniyor...</p>
+        </div>
+      </div>
+    );
   }
-
-  const mockAttachments = [
-    { id: 1, name: 'screenshot.png', size: '245 KB', type: 'image' },
-    { id: 2, name: 'error_log.txt', size: '12 KB', type: 'text' },
-  ];
 
   return (
     <div className="space-y-6 animate-fade-in">
