@@ -258,6 +258,22 @@ export default function TicketDetail() {
           </Card>
         </div>
       </div>
+
+      {/* AI Modals */}
+      <AIModal
+        open={showAISummaryModal}
+        onOpenChange={setShowAISummaryModal}
+        title="AI Özeti"
+        generateContent={() => apiGenerateAISummary(ticket).then(res => res.summary)}
+      />
+      
+      <AIModal
+        open={showDraftReplyModal}
+        onOpenChange={setShowDraftReplyModal}
+        title="AI Taslak Yanıt"
+        generateContent={() => apiGenerateDraftReply(ticket).then(res => res.draft)}
+        onApply={applyDraftReply}
+      />
     </div>
   );
 }
