@@ -5,8 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Button } from '../components/ui/button';
 import { Badge } from '../components/ui/badge';
 import { formatDate, formatRelativeTime } from '../lib/utils';
-import customersData from '../lib/mock/customers.json';
-import ticketsData from '../lib/mock/tickets.json';
+import { fetchCustomer } from '../lib/api';
 import { StatusPill } from '../components/custom/StatusPill';
 
 export default function CustomerDetail() {
