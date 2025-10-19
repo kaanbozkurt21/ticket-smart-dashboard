@@ -35,14 +35,16 @@ const fuzzySearch = (str, pattern) => {
 
 export default function Tickets() {
   const [searchParams] = useSearchParams();
-  const [tickets, setTickets] = useState(ticketsData);
-  const [filteredTickets, setFilteredTickets] = useState(ticketsData);
+  const [tickets, setTickets] = useState([]);
+  const [filteredTickets, setFilteredTickets] = useState([]);
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '');
   const [statusFilter, setStatusFilter] = useState('all');
   const [priorityFilter, setPriorityFilter] = useState('all');
   const [assigneeFilter, setAssigneeFilter] = useState('all');
   const [tagFilter, setTagFilter] = useState('all');
   const [activeFiltersCount, setActiveFiltersCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [totalCount, setTotalCount] = useState(0);
   const navigate = useNavigate();
 
   // Get unique assignees and tags for filters
@@ -50,46 +52,40 @@ export default function Tickets() {
   const uniqueTags = [...new Set(tickets.flatMap(t => t.tags))];
 
   useEffect(() => {
-    let filtered = [...tickets];
-    let filtersCount = 0;
-
-    // Fuzzy search filter on subject
-    if (searchTerm) {
-      filtered = filtered.filter(ticket =>
-        fuzzySearch(ticket.subject, searchTerm) ||
-        ticket.customer.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        ticket.id.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      filtersCount++;
-    }
-
-    // Status filter
-    if (statusFilter !== 'all') {
-      filtered = filtered.filter(ticket => ticket.status === statusFilter);
-      filtersCount++;
-    }
-
-    // Priority filter
-    if (priorityFilter !== 'all') {
-      filtered = filtered.filter(ticket => ticket.priority === priorityFilter);
-      filtersCount++;
-    }
-
-    // Assignee filter
-    if (assigneeFilter !== 'all') {
-      filtered = filtered.filter(ticket => ticket.assignee === assigneeFilter);
-      filtersCount++;
-    }
-
-    // Tag filter
-    if (tagFilter !== 'all') {
-      filtered = filtered.filter(ticket => ticket.tags.includes(tagFilter));
-      filtersCount++;
-    }
-
-    setFilteredTickets(filtered);
-    setActiveFiltersCount(filtersCount);
-  }, [searchTerm, statusFilter, priorityFilter, assigneeFilter, tagFilter, tickets]);
+    // Load tickets from API with filters
+    const loadTickets = async () => {
+      try {
+        setLoading(true);
+        
+        const params = {};
+        if (searchTerm) params.query = searchTerm;
+        if (statusFilter !== 'all') params.status = statusFilter;
+        if (priorityFilter !== 'all') params.priority = priorityFilter;
+        if (assigneeFilter !== 'all') params.assignee = assigneeFilter;
+        if (tagFilter !== 'all') params.tag = tagFilter;
+        
+        const response = await fetchTickets(params);
+        setTickets(response.items);
+        setFilteredTickets(response.items);
+        setTotalCount(response.total);
+        
+        // Count active filters
+        let filtersCount = 0;
+        if (searchTerm) filtersCount++;
+        if (statusFilter !== 'all') filtersCount++;
+        if (priorityFilter !== 'all') filtersCount++;
+        if (assigneeFilter !== 'all') filtersCount++;
+        if (tagFilter !== 'all') filtersCount++;
+        setActiveFiltersCount(filtersCount);
+      } catch (error) {
+        console.error('Failed to load tickets:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadTickets();
+  }, [searchTerm, statusFilter, priorityFilter, assigneeFilter, tagFilter]);
 
   const clearAllFilters = () => {
     setSearchTerm('');
