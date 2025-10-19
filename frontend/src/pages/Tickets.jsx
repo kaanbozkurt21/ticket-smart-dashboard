@@ -168,35 +168,94 @@ export default function Tickets() {
       </div>
 
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Ticket ara... (ID, konu, müşteri)"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
+      <div className="space-y-4">
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Ticket ara... (fuzzy search)"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+              aria-label="Ticket arama"
+            />
+          </div>
+          <Select 
+            value={statusFilter} 
+            onChange={(e) => setStatusFilter(e.target.value)}
+            aria-label="Durum filtresi"
+          >
+            <SelectOption value="all">Tüm Durumlar</SelectOption>
+            <SelectOption value="open">Açık</SelectOption>
+            <SelectOption value="in-progress">İşleniyor</SelectOption>
+            <SelectOption value="resolved">Çözüldü</SelectOption>
+          </Select>
+          <Select 
+            value={priorityFilter} 
+            onChange={(e) => setPriorityFilter(e.target.value)}
+            aria-label="Öncelik filtresi"
+          >
+            <SelectOption value="all">Tüm Öncelikler</SelectOption>
+            <SelectOption value="high">Yüksek</SelectOption>
+            <SelectOption value="medium">Orta</SelectOption>
+            <SelectOption value="low">Düşük</SelectOption>
+          </Select>
         </div>
-        <Select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)}>
-          <SelectOption value="all">Tüm Durumlar</SelectOption>
-          <SelectOption value="open">Açık</SelectOption>
-          <SelectOption value="in-progress">İşleniyor</SelectOption>
-          <SelectOption value="resolved">Çözüldü</SelectOption>
-        </Select>
-        <Select value={priorityFilter} onChange={(e) => setPriorityFilter(e.target.value)}>
-          <SelectOption value="all">Tüm Öncelikler</SelectOption>
-          <SelectOption value="high">Yüksek</SelectOption>
-          <SelectOption value="medium">Orta</SelectOption>
-          <SelectOption value="low">Düşük</SelectOption>
-        </Select>
+        
+        <div className="flex flex-col sm:flex-row gap-4">
+          <Select 
+            value={assigneeFilter} 
+            onChange={(e) => setAssigneeFilter(e.target.value)}
+            className="flex-1"
+            aria-label="Atanan kişi filtresi"
+          >
+            <SelectOption value="all">Tüm Atananlar</SelectOption>
+            {uniqueAssignees.map((assignee) => (
+              <SelectOption key={assignee} value={assignee}>
+                {assignee}
+              </SelectOption>
+            ))}
+          </Select>
+          
+          <Select 
+            value={tagFilter} 
+            onChange={(e) => setTagFilter(e.target.value)}
+            className="flex-1"
+            aria-label="Etiket filtresi"
+          >
+            <SelectOption value="all">Tüm Etiketler</SelectOption>
+            {uniqueTags.map((tag) => (
+              <SelectOption key={tag} value={tag}>
+                {tag}
+              </SelectOption>
+            ))}
+          </Select>
+          
+          {activeFiltersCount > 0 && (
+            <Button 
+              variant="outline" 
+              onClick={clearAllFilters}
+              aria-label="Filtreleri temizle"
+            >
+              <X className="mr-2 h-4 w-4" />
+              Temizle ({activeFiltersCount})
+            </Button>
+          )}
+        </div>
+
+        {activeFiltersCount > 0 && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Filter className="h-4 w-4" />
+            <span>{filteredTickets.length} sonuç bulundu</span>
+          </div>
+        )}
       </div>
 
       {/* Table */}
       <DataTable
         data={filteredTickets}
         columns={columns}
-        pageSize={10}
+        pageSize={25}
         onRowClick={(row) => navigate(`/tickets/${row.id}`)}
         emptyState={
           <EmptyState
