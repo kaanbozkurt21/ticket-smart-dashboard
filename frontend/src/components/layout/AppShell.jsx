@@ -17,6 +17,8 @@ import {
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { cn } from '../../lib/utils';
+import { logout, getCurrentUser } from '../../lib/api';
+import { toast } from 'sonner';
 
 const navigation = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
