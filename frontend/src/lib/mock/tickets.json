@@ -1,0 +1,162 @@
+[
+  {
+    "id": "TKT-001",
+    "subject": "Ödeme işlemi tamamlanamıyor",
+    "description": "Müşteri kredi kartı ile ödeme yapmaya çalışıyor ancak işlem sürekli hata veriyor. 3D Secure adımında problem yaşanıyor.",
+    "status": "open",
+    "priority": "high",
+    "assignee": "Ayşe Yılmaz",
+    "customer": "Mehmet Demir",
+    "customerId": "CUST-001",
+    "tags": ["payment", "technical"],
+    "createdAt": "2024-01-15T09:30:00Z",
+    "updatedAt": "2024-01-15T14:22:00Z",
+    "messages": [
+      {
+        "id": "MSG-001",
+        "author": "Mehmet Demir",
+        "role": "customer",
+        "content": "Merhaba, ödeme yapmaya çalışıyorum ama sürekli hata alıyorum. Yardımcı olabilir misiniz?",
+        "timestamp": "2024-01-15T09:30:00Z"
+      },
+      {
+        "id": "MSG-002",
+        "author": "Ayşe Yılmaz",
+        "role": "agent",
+        "content": "Merhaba Mehmet Bey, durumu inceliyorum. Hangi kart türünü kullanıyorsunuz?",
+        "timestamp": "2024-01-15T09:45:00Z"
+      }
+    ]
+  },
+  {
+    "id": "TKT-002",
+    "subject": "Hesap aktivasyonu yapılamıyor",
+    "description": "Yeni kayıt olan kullanıcı aktivasyon e-postasını alamadı.",
+    "status": "in-progress",
+    "priority": "medium",
+    "assignee": "Can Özkan",
+    "customer": "Zeynep Kaya",
+    "customerId": "CUST-002",
+    "tags": ["account", "email"],
+    "createdAt": "2024-01-15T10:15:00Z",
+    "updatedAt": "2024-01-15T11:30:00Z",
+    "messages": [
+      {
+        "id": "MSG-003",
+        "author": "Zeynep Kaya",
+        "role": "customer",
+        "content": "Kayıt oldum ama aktivasyon maili gelmedi. Spam klasörüne de baktım.",
+        "timestamp": "2024-01-15T10:15:00Z"
+      }
+    ]
+  },
+  {
+    "id": "TKT-003",
+    "subject": "API entegrasyonu hata veriyor",
+    "description": "REST API'ye istek atılırken 401 Unauthorized hatası alınıyor.",
+    "status": "resolved",
+    "priority": "high",
+    "assignee": "Emre Şahin",
+    "customer": "TechCorp Ltd.",
+    "customerId": "CUST-003",
+    "tags": ["api", "technical", "integration"],
+    "createdAt": "2024-01-14T08:00:00Z",
+    "updatedAt": "2024-01-14T16:45:00Z",
+    "resolvedAt": "2024-01-14T16:45:00Z",
+    "messages": [
+      {
+        "id": "MSG-004",
+        "author": "Ali Yıldız",
+        "role": "customer",
+        "content": "API key'i yeniden generate ettik ama hala 401 alıyoruz.",
+        "timestamp": "2024-01-14T08:00:00Z"
+      },
+      {
+        "id": "MSG-005",
+        "author": "Emre Şahin",
+        "role": "agent",
+        "content": "Authorization header'ında Bearer prefix'i eksik. Düzeltildi ve test edildi.",
+        "timestamp": "2024-01-14T16:30:00Z"
+      }
+    ]
+  },
+  {
+    "id": "TKT-004",
+    "subject": "Fatura bilgilerini güncelleyemiyorum",
+    "description": "Kullanıcı settings sayfasından fatura bilgilerini güncellemeye çalışıyor.",
+    "status": "open",
+    "priority": "low",
+    "assignee": "Selin Arslan",
+    "customer": "Fatma Çelik",
+    "customerId": "CUST-004",
+    "tags": ["billing", "account"],
+    "createdAt": "2024-01-15T13:20:00Z",
+    "updatedAt": "2024-01-15T13:20:00Z",
+    "messages": [
+      {
+        "id": "MSG-006",
+        "author": "Fatma Çelik",
+        "role": "customer",
+        "content": "Fatura adresi güncellemesi yapmak istiyorum ama kaydet butonu çalışmıyor.",
+        "timestamp": "2024-01-15T13:20:00Z"
+      }
+    ]
+  },
+  {
+    "id": "TKT-005",
+    "subject": "Premium plana geçiş sorunu",
+    "description": "Kullanıcı ücretsiz plandan premium'a yükseltme yapmaya çalışıyor.",
+    "status": "in-progress",
+    "priority": "medium",
+    "assignee": "Ayşe Yılmaz",
+    "customer": "Burak Aydın",
+    "customerId": "CUST-005",
+    "tags": ["billing", "upgrade"],
+    "createdAt": "2024-01-15T11:00:00Z",
+    "updatedAt": "2024-01-15T12:15:00Z",
+    "messages": []
+  },
+  {
+    "id": "TKT-006",
+    "subject": "Dashboard yüklenmiyor",
+    "description": "Kullanıcı giriş yaptıktan sonra dashboard sayfası sürekli yüklenme ekranında kalıyor.",
+    "status": "open",
+    "priority": "high",
+    "assignee": "Can Özkan",
+    "customer": "Deniz Yıldırım",
+    "customerId": "CUST-006",
+    "tags": ["technical", "ui"],
+    "createdAt": "2024-01-15T14:00:00Z",
+    "updatedAt": "2024-01-15T14:00:00Z",
+    "messages": []
+  },
+  {
+    "id": "TKT-007",
+    "subject": "Bildirim ayarları kaydedilmiyor",
+    "description": "E-posta bildirim tercihlerinde yapılan değişiklikler kaydedilmiyor.",
+    "status": "resolved",
+    "priority": "low",
+    "assignee": "Selin Arslan",
+    "customer": "Ece Güneş",
+    "customerId": "CUST-007",
+    "tags": ["settings", "notifications"],
+    "createdAt": "2024-01-13T15:30:00Z",
+    "updatedAt": "2024-01-14T09:00:00Z",
+    "resolvedAt": "2024-01-14T09:00:00Z",
+    "messages": []
+  },
+  {
+    "id": "TKT-008",
+    "subject": "Rapor indirme hatası",
+    "description": "CSV formatında rapor indirme işlemi başarısız oluyor.",
+    "status": "open",
+    "priority": "medium",
+    "assignee": "Emre Şahin",
+    "customer": "DataCo Analytics",
+    "customerId": "CUST-008",
+    "tags": ["export", "technical"],
+    "createdAt": "2024-01-15T08:45:00Z",
+    "updatedAt": "2024-01-15T10:30:00Z",
+    "messages": []
+  }
+]

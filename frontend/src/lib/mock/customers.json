@@ -1,0 +1,98 @@
+[
+  {
+    "id": "CUST-001",
+    "name": "Mehmet Demir",
+    "email": "mehmet.demir@example.com",
+    "company": "Freelance",
+    "plan": "Pro",
+    "status": "active",
+    "totalTickets": 5,
+    "openTickets": 2,
+    "joinedAt": "2023-08-15T10:00:00Z",
+    "lastActivity": "2024-01-15T14:22:00Z"
+  },
+  {
+    "id": "CUST-002",
+    "name": "Zeynep Kaya",
+    "email": "zeynep.kaya@example.com",
+    "company": "",
+    "plan": "Free",
+    "status": "active",
+    "totalTickets": 1,
+    "openTickets": 1,
+    "joinedAt": "2024-01-15T09:00:00Z",
+    "lastActivity": "2024-01-15T11:30:00Z"
+  },
+  {
+    "id": "CUST-003",
+    "name": "Ali Yıldız",
+    "email": "ali@techcorp.com",
+    "company": "TechCorp Ltd.",
+    "plan": "Enterprise",
+    "status": "active",
+    "totalTickets": 12,
+    "openTickets": 0,
+    "joinedAt": "2023-03-20T08:00:00Z",
+    "lastActivity": "2024-01-14T16:45:00Z"
+  },
+  {
+    "id": "CUST-004",
+    "name": "Fatma Çelik",
+    "email": "fatma.celik@example.com",
+    "company": "",
+    "plan": "Pro",
+    "status": "active",
+    "totalTickets": 3,
+    "openTickets": 1,
+    "joinedAt": "2023-11-10T12:00:00Z",
+    "lastActivity": "2024-01-15T13:20:00Z"
+  },
+  {
+    "id": "CUST-005",
+    "name": "Burak Aydın",
+    "email": "burak.aydin@example.com",
+    "company": "StartupHub",
+    "plan": "Free",
+    "status": "active",
+    "totalTickets": 2,
+    "openTickets": 1,
+    "joinedAt": "2024-01-10T14:30:00Z",
+    "lastActivity": "2024-01-15T12:15:00Z"
+  },
+  {
+    "id": "CUST-006",
+    "name": "Deniz Yıldırım",
+    "email": "deniz@example.com",
+    "company": "",
+    "plan": "Pro",
+    "status": "active",
+    "totalTickets": 4,
+    "openTickets": 1,
+    "joinedAt": "2023-09-05T11:00:00Z",
+    "lastActivity": "2024-01-15T14:00:00Z"
+  },
+  {
+    "id": "CUST-007",
+    "name": "Ece Güneş",
+    "email": "ece.gunes@example.com",
+    "company": "DesignStudio",
+    "plan": "Pro",
+    "status": "active",
+    "totalTickets": 6,
+    "openTickets": 0,
+    "joinedAt": "2023-07-22T09:30:00Z",
+    "lastActivity": "2024-01-14T09:00:00Z"
+  },
+  {
+    "id": "CUST-008",
+    "name": "İsmail Kara",
+    "email": "ismail@dataco.com",
+    "company": "DataCo Analytics",
+    "plan": "Enterprise",
+    "status": "active",
+    "totalTickets": 8,
+    "openTickets": 1,
+    "joinedAt": "2023-05-18T10:15:00Z",
+    "lastActivity": "2024-01-15T10:30:00Z"
+  }
+]
