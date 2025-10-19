@@ -11,7 +11,7 @@ import { PriorityBadge } from '../components/custom/PriorityBadge';
 import { TagBadge } from '../components/custom/TagBadge';
 import { EmptyState } from '../components/custom/EmptyState';
 import { formatRelativeTime } from '../lib/utils';
-import ticketsData from '../lib/mock/tickets.json';
+import { fetchTickets } from '../lib/api';
 import { Ticket } from 'lucide-react';
 
 // Fuzzy search function
