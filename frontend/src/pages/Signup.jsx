@@ -6,6 +6,7 @@ import { Label } from '../components/ui/label';
 import { Button } from '../components/ui/button';
 import { Ticket } from 'lucide-react';
 import { toast } from 'sonner';
+import { signup } from '../lib/api';
 
 export default function Signup() {
   const [formData, setFormData] = useState({
