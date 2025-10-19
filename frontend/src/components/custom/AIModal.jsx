@@ -13,12 +13,20 @@ export const AIModal = ({ open, onOpenChange, title, generateContent, onApply })
       setLoading(true);
       setContent('');
       
-      // Simulate AI processing delay
-      setTimeout(() => {
-        const generatedContent = generateContent();
-        setContent(generatedContent);
-        setLoading(false);
-      }, 1500);
+      // Handle async content generation
+      const loadContent = async () => {
+        try {
+          const result = await generateContent();
+          setContent(result);
+        } catch (error) {
+          console.error('Failed to generate content:', error);
+          setContent('İçerik oluşturulamadı. Lütfen tekrar deneyin.');
+        } finally {
+          setLoading(false);
+        }
+      };
+      
+      loadContent();
     }
   }, [open, generateContent]);
 
