@@ -10,23 +10,32 @@ import { fetchCustomers } from '../lib/api';
 import { Users } from 'lucide-react';
 
 export default function Customers() {
-  const [customers, setCustomers] = useState(customersData);
-  const [filteredCustomers, setFilteredCustomers] = useState(customersData);
+  const [customers, setCustomers] = useState([]);
+  const [filteredCustomers, setFilteredCustomers] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (searchTerm) {
-      const filtered = customers.filter(customer =>
-        customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        customer.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        customer.company.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilteredCustomers(filtered);
-    } else {
-      setFilteredCustomers(customers);
-    }
-  }, [searchTerm, customers]);
+    // Load customers from API
+    const loadCustomers = async () => {
+      try {
+        setLoading(true);
+        const params = {};
+        if (searchTerm) params.query = searchTerm;
+        
+        const response = await fetchCustomers(params);
+        setCustomers(response.items);
+        setFilteredCustomers(response.items);
+      } catch (error) {
+        console.error('Failed to load customers:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadCustomers();
+  }, [searchTerm]);
 
   const getPlanBadgeVariant = (plan) => {
     if (plan === 'Enterprise') return 'default';
