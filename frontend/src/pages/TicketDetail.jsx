@@ -9,8 +9,7 @@ import { PriorityBadge } from '../components/custom/PriorityBadge';
 import { TagBadge } from '../components/custom/TagBadge';
 import { AIModal } from '../components/custom/AIModal';
 import { formatDateTime } from '../lib/utils';
-import { generateAISummary, generateDraftReply, generateInternalNote } from '../lib/mock/ai';
-import ticketsData from '../lib/mock/tickets.json';
+import { fetchTicket, addTicketNote, generateAISummary as apiGenerateAISummary, generateDraftReply as apiGenerateDraftReply } from '../lib/api';
 import { Textarea } from '../components/ui/textarea';
 import { toast } from 'sonner';
 
