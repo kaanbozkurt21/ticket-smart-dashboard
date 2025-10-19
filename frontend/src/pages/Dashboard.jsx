@@ -39,31 +39,28 @@ export default function Dashboard() {
   });
 
   const [recentTickets, setRecentTickets] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Calculate stats from mock data
-    const openCount = ticketsData.filter(t => t.status === 'open').length;
-    const resolvedToday = ticketsData.filter(t => {
-      if (t.status === 'resolved' && t.resolvedAt) {
-        const resolvedDate = new Date(t.resolvedAt);
-        const today = new Date();
-        return resolvedDate.toDateString() === today.toDateString();
+    // Load dashboard data from API
+    const loadDashboardData = async () => {
+      try {
+        setLoading(true);
+        const [statsData, ticketsData] = await Promise.all([
+          fetchDashboardStats(),
+          fetchRecentTickets(5)
+        ]);
+        
+        setStats(statsData);
+        setRecentTickets(ticketsData);
+      } catch (error) {
+        console.error('Failed to load dashboard:', error);
+      } finally {
+        setLoading(false);
       }
-      return false;
-    }).length;
-
-    setStats({
-      openTickets: openCount,
-      resolvedToday,
-      avgResponseTime: '12 dk',
-      satisfactionRate: '94%',
-    });
-
-    // Get 5 most recent tickets
-    const recent = [...ticketsData]
-      .sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-      .slice(0, 5);
-    setRecentTickets(recent);
+    };
+    
+    loadDashboardData();
   }, []);
 
   const statCards = [
