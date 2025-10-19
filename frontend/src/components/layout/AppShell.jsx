@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Ticket, 
@@ -8,9 +8,14 @@ import {
   Moon,
   Sun,
   Menu,
-  X
+  X,
+  Search,
+  User,
+  LogOut,
+  Bell
 } from 'lucide-react';
 import { Button } from '../ui/button';
+import { Input } from '../ui/input';
 import { cn } from '../../lib/utils';
 
 const navigation = [
